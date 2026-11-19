@@ -1,0 +1,196 @@
+:root {
+  --papel: #f7efe0;
+  --papel-2: #fffaf0;
+  --tinta: #2b1d14;
+  --tinta-2: #6b5442;
+  --rojo: #c8402b;
+  --rojo-2: #a5321f;
+  --amarillo: #f4c542;
+  --amarillo-2: #ffe28a;
+  --verde: #1f3b2d;
+  --verde-2: #2c5240;
+  --tiza: #f4ead7;
+  --borde: #e3d3b8;
+  --sombra: 0 6px 18px rgba(64, 36, 16, 0.12);
+  --mano: 'Caveat', 'Comic Sans MS', cursive;
+  --sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+body { font-family: var(--sans); color: var(--tinta); background: var(--papel); font-size: 15px; }
+button { font-family: inherit; }
+
+/* ---------- Login: pizarra sobre mantel ---------- */
+.login-fondo {
+  min-height: 100%;
+  display: grid; place-items: center; padding: 24px;
+  background:
+    repeating-linear-gradient(0deg, rgba(200, 64, 43, 0.18) 0 22px, transparent 22px 44px),
+    repeating-linear-gradient(90deg, rgba(200, 64, 43, 0.18) 0 22px, transparent 22px 44px),
+    var(--papel-2);
+}
+.pizarra {
+  position: relative; width: 100%; max-width: 460px;
+  background: radial-gradient(120% 90% at 30% 10%, #2f5642, var(--verde) 60%);
+  color: var(--tiza); border: 12px solid #8a5a33; border-radius: 18px;
+  padding: 34px 30px 28px; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), inset 0 0 40px rgba(0, 0, 0, 0.35);
+}
+.pizarra h1 { font-family: var(--mano); font-size: 4rem; margin: 0; line-height: 1; letter-spacing: 0.02em; }
+.pizarra-kicker { font-family: var(--mano); font-size: 1.4rem; color: var(--amarillo); margin: 0; }
+.pizarra-sub { margin: 6px 0 22px; opacity: 0.85; }
+.pizarra-label { display: block; font-family: var(--mano); font-size: 1.45rem; margin: 14px 0 6px; }
+.pizarra input {
+  width: 100%; font: 600 1.05rem var(--sans); padding: 12px 14px; border-radius: 10px;
+  border: 2px dashed rgba(244, 234, 215, 0.5); background: rgba(255, 255, 255, 0.06); color: var(--tiza); outline: none;
+}
+.pizarra input::placeholder { color: rgba(244, 234, 215, 0.5); }
+.pizarra input:focus { border-color: var(--amarillo); }
+.avatares { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.avatar-op {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px;
+  border-radius: 12px; border: 2px solid transparent; background: rgba(255, 255, 255, 0.06); color: var(--tiza); cursor: pointer;
+}
+.avatar-op span { font-size: 1.8rem; line-height: 1.1; }
+.avatar-op small { font-size: 0.72rem; opacity: 0.8; }
+.avatar-op.sel { border-color: var(--amarillo); background: rgba(244, 197, 66, 0.15); }
+.btn-fogon {
+  margin-top: 22px; width: 100%; padding: 14px; border: 0; border-radius: 12px; cursor: pointer;
+  background: linear-gradient(180deg, #e2593f, var(--rojo)); color: #fff; font: 800 1.05rem var(--sans);
+  box-shadow: 0 6px 0 var(--rojo-2);
+}
+.btn-fogon:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 3px 0 var(--rojo-2); }
+.btn-fogon:disabled { opacity: 0.55; cursor: not-allowed; }
+.humo { position: absolute; top: -46px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; }
+.humo span { width: 10px; height: 34px; border-radius: 10px; background: rgba(255, 255, 255, 0.55); filter: blur(3px); animation: humo 2.2s ease-in-out infinite; }
+.humo span:nth-child(2) { animation-delay: 0.5s; } .humo span:nth-child(3) { animation-delay: 1s; }
+@keyframes humo { 0% { transform: translateY(10px) scaleY(0.6); opacity: 0; } 50% { opacity: 0.8; } 100% { transform: translateY(-18px) scaleY(1.1); opacity: 0; } }
+
+/* ---------- Layout del chat ---------- */
+.cocina { height: 100%; display: grid; grid-template-columns: 260px minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
+.cabecera, .tablero, .mesa { min-width: 0; }
+.cabecera {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; padding: 10px 22px;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.16) 0 10px, transparent 10px 20px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 10px, transparent 10px 20px),
+    var(--rojo);
+  color: #fff; border-bottom: 4px solid var(--amarillo);
+}
+.marca { display: flex; align-items: center; gap: 12px; }
+.marca h1 { font-family: var(--mano); font-size: 2.3rem; margin: 0; line-height: 1; }
+.marca p { margin: 0; font-size: 0.82rem; opacity: 0.92; }
+.estado { margin-left: auto; padding: 6px 14px; border-radius: 999px; font-weight: 800; font-size: 0.85rem; background: rgba(0, 0, 0, 0.25); }
+.estado.off { background: #2b1d14; color: var(--amarillo-2); }
+.yo { display: flex; align-items: center; gap: 8px; background: rgba(0, 0, 0, 0.2); padding: 4px 6px 4px 10px; border-radius: 999px; }
+.btn-salir { border: 0; border-radius: 999px; padding: 6px 12px; background: var(--papel-2); color: var(--rojo); font-weight: 800; cursor: pointer; }
+
+/* Tablero lateral (pizarra) */
+.tablero {
+  background: radial-gradient(140% 80% at 20% 0%, #2f5642, var(--verde) 60%);
+  color: var(--tiza); padding: 20px 18px; overflow-y: auto; border-right: 8px solid #8a5a33;
+}
+.tablero h2 { font-family: var(--mano); font-size: 2rem; margin: 0; }
+.tablero-sub { margin: 0 0 12px; opacity: 0.75; font-size: 0.85rem; }
+.tablero ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.tablero li { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border-radius: 10px; }
+.tablero li.yo-mismo { background: rgba(244, 197, 66, 0.14); }
+.tablero .avatar { background: rgba(255, 255, 255, 0.1); }
+.receta-dia { margin-top: 26px; padding: 14px; border: 2px dashed rgba(244, 234, 215, 0.4); border-radius: 12px; }
+.receta-dia p { font-family: var(--mano); font-size: 1.3rem; margin: 0; color: var(--amarillo); }
+.receta-dia strong { display: block; font-family: var(--mano); font-size: 1.6rem; line-height: 1.1; margin: 2px 0 6px; }
+.receta-dia small { opacity: 0.8; line-height: 1.4; display: block; }
+.burbujitas { margin-left: auto; display: inline-flex; gap: 3px; }
+.burbujitas i { width: 6px; height: 6px; border-radius: 50%; background: var(--amarillo); animation: rebote 1s infinite; }
+.burbujitas i:nth-child(2) { animation-delay: 0.15s; } .burbujitas i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes rebote { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+.avatar { width: 34px; height: 34px; flex: 0 0 34px; display: grid; place-items: center; border-radius: 50%; background: var(--papel-2); font-size: 1.25rem; box-shadow: var(--sombra); }
+
+/* Mesa: zona de mensajes */
+.mesa {
+  display: flex; flex-direction: column; min-height: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(107, 84, 66, 0.12) 1px, transparent 0) 0 0 / 18px 18px,
+    var(--papel);
+}
+.mensajes { list-style: none; margin: 0; padding: 22px 26px 8px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.vacio { margin: auto; font-family: var(--mano); font-size: 1.8rem; color: var(--tinta-2); }
+.sistema { align-self: center; display: flex; gap: 10px; align-items: baseline; font-family: var(--mano); font-size: 1.35rem; color: var(--verde-2); background: rgba(31, 59, 45, 0.07); padding: 2px 14px; border-radius: 999px; }
+.sistema.salida { color: var(--tinta-2); }
+.sistema small { font-family: var(--sans); font-size: 0.7rem; opacity: 0.6; }
+
+.fila { display: flex; gap: 8px; align-items: flex-end; max-width: 72%; }
+.fila.mio { align-self: flex-end; flex-direction: row-reverse; }
+.burbuja-col { display: flex; flex-direction: column; min-width: 0; }
+.fila.mio .burbuja-col { align-items: flex-end; }
+.burbuja {
+  position: relative; padding: 9px 14px 6px; border-radius: 16px; box-shadow: var(--sombra);
+  background: var(--papel-2); border: 1px solid var(--borde); border-bottom-left-radius: 4px;
+}
+.mio .burbuja { background: var(--amarillo-2); border-color: #eccb6c; border-bottom-left-radius: 16px; border-bottom-right-radius: 4px; }
+.burbuja p { margin: 0; white-space: pre-wrap; word-break: break-word; }
+.autor { display: block; font-size: 0.78rem; color: var(--rojo); margin-bottom: 2px; }
+.hora { display: block; text-align: right; font-size: 0.68rem; color: var(--tinta-2); margin-top: 2px; }
+.polaroid { margin: 4px 0 0; background: #fff; padding: 8px 8px 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); transform: rotate(-1.2deg); }
+.mio .polaroid { transform: rotate(1.2deg); }
+.polaroid img { display: block; max-width: 260px; max-height: 240px; object-fit: cover; }
+.polaroid figcaption { font-family: var(--mano); font-size: 1.15rem; text-align: center; }
+.nota-voz { display: flex; flex-direction: column; gap: 4px; font-size: 0.82rem; font-weight: 700; }
+.nota-voz audio { height: 36px; max-width: 260px; }
+
+/* Reacciones */
+.reaccionar {
+  position: absolute; top: -18px; right: 8px; display: flex; gap: 2px; padding: 3px 6px;
+  background: #fff; border-radius: 999px; box-shadow: var(--sombra); opacity: 0; pointer-events: none; transition: opacity 0.15s;
+}
+.mio .reaccionar { right: auto; left: 8px; }
+.burbuja:hover .reaccionar, .burbuja:focus-within .reaccionar { opacity: 1; pointer-events: auto; }
+.reaccionar button { border: 0; background: none; font-size: 1.1rem; cursor: pointer; border-radius: 8px; padding: 0 2px; }
+.reaccionar button:hover { transform: scale(1.25); }
+.reacciones { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+.reaccion { border: 1px solid var(--borde); background: #fff; border-radius: 999px; padding: 1px 8px; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.reaccion.propia { border-color: var(--rojo); background: #fde9e4; color: var(--rojo-2); }
+
+.escribiendo { height: 22px; margin: 0; padding: 0 28px; font-family: var(--mano); font-size: 1.25rem; color: var(--verde-2); }
+
+/* Barra de envio */
+.barra-wrap { position: relative; padding: 6px 20px 16px; }
+.antojos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.antojos button { border: 1px dashed var(--rojo); background: transparent; color: var(--rojo-2); border-radius: 999px; padding: 4px 12px; font-weight: 700; font-size: 0.82rem; cursor: pointer; }
+.antojos button:hover:not(:disabled) { background: #fde9e4; }
+.antojos button:disabled { opacity: 0.4; }
+.barra { display: flex; gap: 8px; align-items: center; background: #fff; border: 2px solid var(--borde); border-radius: 16px; padding: 6px; box-shadow: var(--sombra); }
+.barra input { flex: 1; border: 0; outline: none; font: 600 1rem var(--sans); padding: 8px 6px; background: transparent; color: var(--tinta); min-width: 0; }
+.icono { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 12px; background: var(--papel); font-size: 1.25rem; cursor: pointer; }
+.icono:hover { background: var(--amarillo-2); }
+.icono.ocupado { opacity: 0.5; cursor: progress; }
+.icono.grabando { background: var(--rojo); animation: pulso 1s infinite; }
+@keyframes pulso { 50% { box-shadow: 0 0 0 6px rgba(200, 64, 43, 0.25); } }
+.btn-servir { border: 0; border-radius: 12px; padding: 10px 18px; background: var(--rojo); color: #fff; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 var(--rojo-2); }
+.btn-servir:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+.picker { position: absolute; bottom: 74px; left: 20px; z-index: 5; }
+.barra-error { margin: 0 0 6px; color: var(--rojo-2); font-weight: 700; font-size: 0.85rem; }
+
+@media (max-width: 760px) {
+  .cocina { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); height: 100dvh; }
+  .antojos { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .antojos button { flex: 0 0 auto; }
+  .estado { margin-left: 0; font-size: 0.75rem; }
+  .yo { margin-left: auto; }
+  .yo b { display: none; }
+  .marca h1 { font-size: 1.8rem; }
+  .marca img { width: 32px; height: 32px; }
+  .icono { width: 36px; height: 36px; }
+  .btn-servir { padding: 9px 12px; }
+  .picker { left: 10px; right: 10px; }
+  .tablero { border-right: 0; border-bottom: 6px solid #8a5a33; padding: 10px 14px; }
+  .tablero ul { flex-direction: row; flex-wrap: wrap; }
+  .receta-dia, .tablero-sub { display: none; }
+  .tablero h2 { font-size: 1.4rem; }
+  .cabecera { flex-wrap: wrap; gap: 8px; padding: 8px 12px; }
+  .marca p { display: none; }
+  .fila { max-width: 90%; }
+  .mensajes { padding: 16px 12px 6px; }
+  .barra-wrap { padding: 4px 10px 12px; }
+}
+.picker-cargando { background: #fff; padding: 14px 18px; border-radius: 12px; box-shadow: var(--sombra); font-weight: 700; }
